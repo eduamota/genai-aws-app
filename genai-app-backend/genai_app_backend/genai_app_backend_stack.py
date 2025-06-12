@@ -2,7 +2,9 @@ from aws_cdk import (
     Duration,
     aws_lambda as lambda_,
     aws_iam as iam,
+    aws_apigateway as apigateway,
     Stack,
+    CfnOutput
     # aws_sqs as sqs,
 )
 from constructs import Construct
@@ -39,3 +41,13 @@ class GenaiAppBackendStack(Stack):
                 "BEDROCK_MODEL_ID": "us.amazon.nova-lite-v1:0",
             }
         )
+
+        api = apigateway.LambdaRestApi(self, "llm_request",
+                                       handler=fn,
+                                        proxy=False
+        )
+
+        items = api.root.add_resource("prompt")
+        items.add_method("POST")
+
+        CfnOutput(self, "API URL", value=api.url)

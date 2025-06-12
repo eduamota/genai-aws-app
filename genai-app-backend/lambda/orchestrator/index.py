@@ -1,9 +1,12 @@
 import boto3
 import os
+import json
 
 def handler(event, context):
+    print(event)
+    body = json.loads(event.get("body", "{}"))
 
-    user_prompt = event.get("prompt", "Write a short story about dragons")
+    user_prompt = body.get("prompt", "Write a short story about dragons")
 
     modelId = os.environ.get("BEDROCK_MODEL_ID", "us.amazon.nova-lite-v1:0")
     client_runtime = boto3.client("bedrock-runtime")
