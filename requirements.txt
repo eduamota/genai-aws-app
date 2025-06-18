@@ -1,3 +1,4 @@
 ipykernel
 boto3
 pypdf
+numpy

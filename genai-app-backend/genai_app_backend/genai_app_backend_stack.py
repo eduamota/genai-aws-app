@@ -47,7 +47,7 @@ class GenaiAppBackendStack(Stack):
                                         proxy=False
         )
 
-        items = api.root.add_resource("prompt")
+        items = api.root.add_resource("prompt" )
         items.add_method("POST")
 
         CfnOutput(self, "API URL", value=api.url)
